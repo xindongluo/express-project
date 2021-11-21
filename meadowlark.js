@@ -1,6 +1,6 @@
 // 项目入口 程序文件
-const express = require('express')
-
+const express = require('express');
+const arr = require('./lib/arr');
 const app = express();
 // 设置视图引擎
 const handlebars = require('express-handlebars').create({
@@ -21,16 +21,10 @@ app.get('/',function(req,res){
 })
 
 // 视图中的动态内容
-var arr=[
-    '你很棒',
-    '今天学的什么',
-    '生活总是很美好',
-]
 app.get('/about',function(req,res){
     // res.type('text/plain');
     // res.send('about 页面')
-    var getone = arr[Math.floor(Math.random()*arr['length'])]
-    res.render('about',{arr:getone})
+    res.render('about',{arr:arr.getone()})
 })
 // 定制404页面
 app.use(function(req,res){
