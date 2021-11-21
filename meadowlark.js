@@ -12,6 +12,11 @@ app.set('port',process.env.PORT||3000);
 
 // 设置静态资源static中间件
 app.use(express.static(__dirname+'/public'))
+// 测试用
+app.use(function(req,res,next){
+    res.locals.showTests = app.get('evn')!=='production'&&req.query.test==='1';
+    next();
+})
 
 // 设置路由
 app.get('/',function(req,res){
@@ -24,7 +29,10 @@ app.get('/',function(req,res){
 app.get('/about',function(req,res){
     // res.type('text/plain');
     // res.send('about 页面')
-    res.render('about',{arr:arr.getone()})
+    res.render('about',{
+        arr:arr.getone(),
+        pageTestScript:'/qa/tests-about.js'
+    })
 })
 // 定制404页面
 app.use(function(req,res){
